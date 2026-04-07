@@ -1,0 +1,125 @@
+name: 'locize sync'
+description: 'Synchronize translation files between your repository and locize. Pushes new keys, removes deleted keys, and optionally triggers automatic AI/MT translation.'
+author: 'locize'
+branding:
+  icon: 'refresh-cw'
+  color: 'blue'
+
+inputs:
+  api-key:
+    description: 'The api-key that should be used'
+    required: true
+  project-id:
+    description: 'The project-id that should be used'
+    required: true
+  path:
+    description: 'Specify the path that should be used (default: current working directory)'
+    required: false
+  version:
+    description: 'The version that should be targeted (default: latest)'
+    required: false
+    default: 'latest'
+  format:
+    description: 'File format of namespaces (default: json; [nested, flat, xliff2, xliff12, xlf2, xlf12, android, yaml, yaml-rails, yaml-rails-ns, yaml-nested, yml, yml-rails, yml-nested, csv, xlsx, po, strings, resx, fluent, tmx, laravel, properties, xcstrings])'
+    required: false
+    default: 'json'
+  clean:
+    description: 'Removes all local files by removing the whole folder before downloading (default: false)'
+    required: false
+  clean-local-files:
+    description: 'Removes all local files without removing any folder (default: false)'
+    required: false
+  update-values:
+    description: 'Update values of existing translations on locize (default: false)'
+    required: false
+  auto-translate:
+    description: 'Trigger automatic AI/MT translation of updated translations (default: false)'
+    required: false
+  skip-delete:
+    description: 'Skip the removal of keys on locize that were deleted locally (default: false)'
+    required: false
+  delete-remote-namespace:
+    description: 'Delete a complete namespace on locize if the local file in the reference language was deleted (default: false)'
+    required: false
+  skip-empty:
+    description: 'Skips to download empty files (default: false)'
+    required: false
+  reference-language-only:
+    description: 'Check for changes in reference language only (default: true)'
+    required: false
+  compare-modification-time:
+    description: 'Take file modification time into account when comparing local and remote (default: false)'
+    required: false
+  language:
+    description: 'The language that should be targeted'
+    required: false
+  languages:
+    description: 'Comma-separated list of languages that should be targeted'
+    required: false
+  namespace:
+    description: 'The namespace that should be targeted (comma-separated list supported)'
+    required: false
+  language-folder-prefix:
+    description: 'This will be added as a local folder name prefix in front of the language'
+    required: false
+  path-mask:
+    description: 'This will define the folder and file structure; do not add a file extension (default: {{language}}/{{namespace}})'
+    required: false
+  unpublished:
+    description: 'Downloads the current (unpublished) translations. This will generate private download costs (default: false)'
+    required: false
+  overridden-only:
+    description: 'Downloads only the current overridden (unpublished) translations of a tenant or branch project (default: false)'
+    required: false
+  branch:
+    description: 'The branch name (or id) that should be targeted'
+    required: false
+  dry:
+    description: 'Dry run — show what would change without actually syncing (default: false)'
+    required: false
+  cdn-type:
+    description: 'Specify the cdn endpoint that should be used (standard or pro, default: standard)'
+    required: false
+    default: 'standard'
+  backup-deleted-path:
+    description: 'Saves the segments that will be deleted in this path'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 24
+    - run: npm i -g locize-cli@12
+      shell: bash
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: sync.sh
+      shell: bash
+      env:
+        INPUT_API_KEY: ${{ inputs.api-key }}
+        INPUT_PROJECT_ID: ${{ inputs.project-id }}
+        INPUT_PATH: ${{ inputs.path }}
+        INPUT_VERSION: ${{ inputs.version }}
+        INPUT_FORMAT: ${{ inputs.format }}
+        INPUT_CLEAN: ${{ inputs.clean }}
+        INPUT_CLEAN_LOCAL_FILES: ${{ inputs.clean-local-files }}
+        INPUT_UPDATE_VALUES: ${{ inputs.update-values }}
+        INPUT_AUTO_TRANSLATE: ${{ inputs.auto-translate }}
+        INPUT_SKIP_DELETE: ${{ inputs.skip-delete }}
+        INPUT_DELETE_REMOTE_NAMESPACE: ${{ inputs.delete-remote-namespace }}
+        INPUT_SKIP_EMPTY: ${{ inputs.skip-empty }}
+        INPUT_REFERENCE_LANGUAGE_ONLY: ${{ inputs.reference-language-only }}
+        INPUT_COMPARE_MODIFICATION_TIME: ${{ inputs.compare-modification-time }}
+        INPUT_LANGUAGE: ${{ inputs.language }}
+        INPUT_LANGUAGES: ${{ inputs.languages }}
+        INPUT_NAMESPACE: ${{ inputs.namespace }}
+        INPUT_LANGUAGE_FOLDER_PREFIX: ${{ inputs.language-folder-prefix }}
+        INPUT_PATH_MASK: ${{ inputs.path-mask }}
+        INPUT_UNPUBLISHED: ${{ inputs.unpublished }}
+        INPUT_OVERRIDDEN_ONLY: ${{ inputs.overridden-only }}
+        INPUT_BRANCH: ${{ inputs.branch }}
+        INPUT_DRY: ${{ inputs.dry }}
+        INPUT_CDN_TYPE: ${{ inputs.cdn-type }}
+        INPUT_BACKUP_DELETED_PATH: ${{ inputs.backup-deleted-path }}
