@@ -1,5 +1,5 @@
 name: 'locize sync'
-description: 'Synchronize translation files between your repository and locize. Pushes new keys, removes deleted keys, and optionally triggers automatic AI/MT translation.'
+description: 'Synchronize translation files between your repository and locize. Pushes new keys, removes deleted keys, etc.'
 author: 'locize'
 branding:
   icon: 'refresh-cw'
