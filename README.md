@@ -110,7 +110,7 @@ The project-id that should be used. **Required** unless `LOCIZE_PROJECTID` (or `
 ### Basic sync
 
 ```yaml
-- uses: locize/sync@v1
+- uses: locize/sync@v2
   with:
     api-key: ${{ secrets.LOCIZE_API_KEY }}
     project-id: ${{ secrets.LOCIZE_PROJECT_ID }}
@@ -120,7 +120,7 @@ The project-id that should be used. **Required** unless `LOCIZE_PROJECTID` (or `
 ### Sync with automatic AI translation
 
 ```yaml
-- uses: locize/sync@v1
+- uses: locize/sync@v2
   with:
     api-key: ${{ secrets.LOCIZE_API_KEY }}
     project-id: ${{ secrets.LOCIZE_PROJECT_ID }}
@@ -134,7 +134,7 @@ The project-id that should be used. **Required** unless `LOCIZE_PROJECTID` (or `
 steps:
   - uses: actions/checkout@v4
 
-  - uses: locize/sync@v1
+  - uses: locize/sync@v2
     with:
       api-key: ${{ secrets.LOCIZE_API_KEY }}
       project-id: ${{ secrets.LOCIZE_PROJECT_ID }}
@@ -150,7 +150,7 @@ steps:
 ### Sync a specific branch
 
 ```yaml
-- uses: locize/sync@v1
+- uses: locize/sync@v2
   with:
     api-key: ${{ secrets.LOCIZE_API_KEY }}
     project-id: ${{ secrets.LOCIZE_PROJECT_ID }}
