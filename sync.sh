@@ -1,4 +1,19 @@
-COMMAND="locize sync --api-key $INPUT_API_KEY --project-id $INPUT_PROJECT_ID --ver $INPUT_VERSION --format $INPUT_FORMAT"
+# Resolve credentials: the 'with:' input first, then environment variables,
+# accepting both the canonical (LOCIZE_PROJECTID / LOCIZE_API_KEY) and the
+# underscore/concatenated variants so any existing secret naming just works.
+PROJECT_ID="${INPUT_PROJECT_ID:-${LOCIZE_PROJECTID:-${LOCIZE_PROJECT_ID:-}}}"
+API_KEY="${INPUT_API_KEY:-${LOCIZE_API_KEY:-${LOCIZE_APIKEY:-}}}"
+
+if [ -z "$PROJECT_ID" ]; then
+  echo "::error::Missing project id. Pass it via 'with: project-id:' or set LOCIZE_PROJECTID (LOCIZE_PROJECT_ID also accepted) in the environment." >&2
+  exit 1
+fi
+if [ -z "$API_KEY" ]; then
+  echo "::error::Missing api key. Pass it via 'with: api-key:' or set LOCIZE_API_KEY (LOCIZE_APIKEY also accepted) in the environment." >&2
+  exit 1
+fi
+
+COMMAND="locize sync --api-key $API_KEY --project-id $PROJECT_ID --ver $INPUT_VERSION --format $INPUT_FORMAT"
 
 if [ ! -z "$INPUT_PATH" ]; then
   COMMAND="$COMMAND --path $INPUT_PATH"

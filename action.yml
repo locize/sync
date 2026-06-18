@@ -7,11 +7,11 @@ branding:
 
 inputs:
   api-key:
-    description: 'The api-key that should be used'
-    required: true
+    description: 'The api-key that should be used. Optional if LOCIZE_API_KEY (or LOCIZE_APIKEY) is set in the environment.'
+    required: false
   project-id:
-    description: 'The project-id that should be used'
-    required: true
+    description: 'The project-id that should be used. Optional if LOCIZE_PROJECTID (or LOCIZE_PROJECT_ID) is set in the environment.'
+    required: false
   path:
     description: 'Specify the path that should be used (default: current working directory)'
     required: false

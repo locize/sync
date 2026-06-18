@@ -7,11 +7,11 @@ It uses the Locize CLI behind the scene. For detailed documentation of the Lociz
 
 ### `api-key`
 
-**Required** The api-key that should be used.
+The api-key that should be used. **Required** unless `LOCIZE_API_KEY` (or `LOCIZE_APIKEY`) is set in the environment.
 
 ### `project-id`
 
-**Required** The project-id that should be used.
+The project-id that should be used. **Required** unless `LOCIZE_PROJECTID` (or `LOCIZE_PROJECT_ID`) is set in the environment.
 
 ### `path`
 
