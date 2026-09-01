@@ -57,6 +57,14 @@ The project-id that should be used. **Required** unless `LOCIZE_PROJECTID` (or `
 
 **Optional** Check for changes in reference language only (default: true).
 
+### `changed-only`
+
+**Optional** Only sync keys that changed on the current git branch compared to the base branch (default: false). The local reference-language files are diffed against the merge-base with the base branch; additions, value updates and auto-translation are restricted to those keys, and deletions are skipped. Keys are scoped per namespace file, and when any plural variant of a key changed, all its plural forms are included. Requires locize-cli >= 12.7 (installed automatically) and a checkout that includes the base branch, e.g. `actions/checkout` with `fetch-depth: 0`.
+
+### `base`
+
+**Optional** The git base branch/ref to compare against for `changed-only` (default: auto-detect `origin/HEAD`, then `main`, then `master`).
+
 ### `compare-modification-time`
 
 **Optional** Take file modification time into account when comparing local and remote (default: false).
@@ -156,4 +164,29 @@ steps:
     project-id: ${{ secrets.LOCIZE_PROJECT_ID }}
     path: locales
     branch: feature-v2
+```
+
+### Sync only a pull request's changes
+
+Only the keys the PR added or modified are synced and auto-translated; nothing is deleted. The base branch must be available in the checkout, so use `fetch-depth: 0`:
+
+```yaml
+on:
+  pull_request:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: locize/sync@v2
+        with:
+          api-key: ${{ secrets.LOCIZE_API_KEY }}
+          project-id: ${{ secrets.LOCIZE_PROJECT_ID }}
+          path: locales
+          auto-translate: true
+          changed-only: true
 ```

@@ -55,6 +55,14 @@ if [ ! -z "$INPUT_REFERENCE_LANGUAGE_ONLY" ]; then
   COMMAND="$COMMAND --reference-language-only $INPUT_REFERENCE_LANGUAGE_ONLY"
 fi
 
+if [ ! -z "$INPUT_CHANGED_ONLY" ]; then
+  COMMAND="$COMMAND --changed-only $INPUT_CHANGED_ONLY"
+fi
+
+if [ ! -z "$INPUT_BASE" ]; then
+  COMMAND="$COMMAND --base $INPUT_BASE"
+fi
+
 if [ ! -z "$INPUT_COMPARE_MODIFICATION_TIME" ]; then
   COMMAND="$COMMAND --compare-modification-time $INPUT_COMPARE_MODIFICATION_TIME"
 fi

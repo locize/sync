@@ -47,6 +47,12 @@ inputs:
   reference-language-only:
     description: 'Check for changes in reference language only (default: true)'
     required: false
+  changed-only:
+    description: 'Only sync keys that changed on the current git branch compared to the base branch (git diff of the local reference-language files); restricts additions, updates and auto-translation to those keys and skips deletions. Requires a checkout that includes the base branch, e.g. actions/checkout with fetch-depth: 0 (default: false)'
+    required: false
+  base:
+    description: 'The git base branch/ref to compare against for changed-only (default: auto-detect origin/HEAD, then main, then master)'
+    required: false
   compare-modification-time:
     description: 'Take file modification time into account when comparing local and remote (default: false)'
     required: false
@@ -88,7 +94,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v6
+    - uses: actions/setup-node@v7
       with:
         node-version: 24
     - run: npm i -g locize-cli@12
@@ -111,6 +117,8 @@ runs:
         INPUT_DELETE_REMOTE_NAMESPACE: ${{ inputs.delete-remote-namespace }}
         INPUT_SKIP_EMPTY: ${{ inputs.skip-empty }}
         INPUT_REFERENCE_LANGUAGE_ONLY: ${{ inputs.reference-language-only }}
+        INPUT_CHANGED_ONLY: ${{ inputs.changed-only }}
+        INPUT_BASE: ${{ inputs.base }}
         INPUT_COMPARE_MODIFICATION_TIME: ${{ inputs.compare-modification-time }}
         INPUT_LANGUAGE: ${{ inputs.language }}
         INPUT_LANGUAGES: ${{ inputs.languages }}
