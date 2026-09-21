@@ -91,11 +91,11 @@ The project-id that should be used. **Required** unless `LOCIZE_PROJECTID` (or `
 
 ### `unpublished`
 
-**Optional** Downloads the current (unpublished) translations. This will generate private download costs (default: false).
+**Optional** Downloads the current (unpublished) translations. Counts as private downloads: included from the Growth plan on, refused (403) on Free, Starter and Starter-Plus (default: false).
 
 ### `overridden-only`
 
-**Optional** Downloads only the current overridden (unpublished) translations of a tenant or branch project (default: false).
+**Optional** Downloads only the current overridden (unpublished) translations of a tenant or branch project. Counts as private downloads like `unpublished` (default: false).
 
 ### `branch`
 
