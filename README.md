@@ -27,7 +27,7 @@ The project-id that should be used. **Required** unless `LOCIZE_PROJECTID` (or `
 
 ### `clean`
 
-**Optional** Removes all local files by removing the whole folder before downloading (default: false).
+**Optional** Removes the language folders or files the path-mask wrote into path before syncing; dot entries stay. Refused when path is the working directory (the default) or a git repository root, unless path-mask starts with a folder, so set path to your translations folder, e.g. locales (default: false).
 
 ### `clean-local-files`
 
